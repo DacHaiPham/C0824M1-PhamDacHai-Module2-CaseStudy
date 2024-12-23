@@ -5,11 +5,13 @@ import Service.SongService;
 
 import java.util.List;
 
+
 public class SongController {
     private SongService service = new SongService();
 
     public void addSong(String id, String title, String artist, String author) {
         service.addSong(new Song(id, title, artist, author));
+//        System.out.println("Song added successfully");
     }
 
     public List<Song> getAllSongs() {
@@ -35,20 +37,19 @@ public class SongController {
     public void saveSong(String id, String title, String artist, String author) {
         Song song = new Song(id, title, artist, author);
         service.saveSong(song);
+        System.out.println("song saved successfully");
     }
 
-
-    public List<Song> displayAllSongs() {
-        List<Song> songs = service.getAllSongs();
-        if (songs.isEmpty()) {
-            System.out.println("No songs found.");
-        } else {
-            System.out.println("List of Songs:");
-            for (Song song : songs) {
+    public List<Song> searchSong(String title) {
+        List<Song> results = service.searchSong(title);
+        if (results.isEmpty()) {
+            System.out.println("Không tìm thấy kết quả phù hợp: " + title);
+//        } else {
+//            System.out.println("Kết quả tìm kiếm bài hát: ");
+            for (Song song : results) {
                 System.out.println(song);
             }
         }
-        return songs;
+        return results;
     }
-
 }

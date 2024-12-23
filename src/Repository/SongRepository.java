@@ -52,37 +52,18 @@ public class SongRepository {
         }
     }
 
-    public List<Song> loadSongs() {
-        File file = new File("src/data/Song.csv");
-        List<Song> songs = new ArrayList<>();
 
-        if (!file.exists()) {
-            System.out.println("File does not exist. Returning empty list.");
-            return songs;
-        }
+    public List<Song> searchSong(String title){
+        List<Song> result = new ArrayList<>();
+        for (Song song : songs) {
 
-        try {
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                // Phân tách dòng thành các phần dựa trên dấu phẩy
-                String[] songData = line.split(",");
-                if (songData.length == 4) { // Đảm bảo đúng định dạng
-                    Song song = new Song(
-                            songData[0], // ID
-                            songData[1], // Title
-                            songData[2], // Artist
-                            songData[3]  // Author
-                    );
-                    songs.add(song);
-                }
+            if (song.getId().toString().contains(title) ||
+                    song.getTitle().toLowerCase().contains(title.toLowerCase()) ||
+                    song.getArtist().toLowerCase().contains(title.toLowerCase()) ||
+                    song.getAuthor().toLowerCase().contains(title.toLowerCase())) {
+                result.add(song);
             }
-            bufferedReader.close();
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
         }
-        return songs;
+        return result;
     }
 }

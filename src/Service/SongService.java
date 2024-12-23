@@ -8,8 +8,9 @@ import java.util.List;
 public class SongService {
     private SongRepository repository = new SongRepository();
 
-    public void addSong(Song Song) {
-        repository.addSong(Song);
+    public void addSong(Song song) {
+        repository.addSong(song);
+        repository.saveSong(song);
     }
 
     public List<Song> getAllSongs() {
@@ -36,7 +37,15 @@ public class SongService {
         repository.saveSong(song); // Lưu bài hát vào file thông qua repository
     }
 
-    public List<Song> loadSongs() {
-        return repository.loadSongs(); // Trả về danh sách bài hát từ file
+//    public List<Song> loadSongs() {
+//        return repository.loadSongs(); // Trả về danh sách bài hát từ file
+//    }
+
+//    public SongService(SongRepository repository) {
+//        this.repository = repository;
+//    }
+
+    public List<Song> searchSong(String title) {
+        return repository.searchSong(title);
     }
 }
